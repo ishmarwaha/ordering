@@ -1,0 +1,91 @@
+services:
+  product:
+    container_name: product
+    build:
+      context: ./product-service
+    volumes:
+      - ./protos:/protos 
+    environment:
+      - DB_TYPE=postgres
+      - PG_USER=postgres
+      - PG_PASSWORD=postgres
+      - PG_DB=postgres
+      - PG_PORT=5432
+      - PG_HOST=product-db
+      - GRPC_VERBOSITY=DEBUG
+      - GRPC_TRACE=all
+    depends_on:
+      - product-db
+    networks:
+      - product-network
+      - grpc
+
+  order:
+    container_name: order
+    build:
+      context: ./order-service
+    volumes:
+      - ./protos:/protos
+    environment:
+      - DB_TYPE=postgres
+      - PG_USER=postgres
+      - PG_PASSWORD=postgres
+      - PG_DB=postgres
+      - PG_PORT=5432
+      - PG_HOST=order-db
+      - GRPC_VERBOSITY=DEBUG
+      - GRPC_TRACE=all
+    depends_on:
+      - order-db
+    networks:
+      - order-network
+      - grpc
+
+  product-db:
+    container_name: product-db
+    image: postgres:13
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - product_data:/var/lib/postgresql/data
+    networks:
+      - product-network
+
+  order-db:
+    container_name: order-db
+    image: postgres:13
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - order_data:/var/lib/postgresql/data
+    networks:
+      - order-network
+
+  api-gateway:
+    container_name: gateway
+    build:
+      context: ./api-gateway
+    environment:
+      - ORDER_SERVICE_URL=order:50052
+      - PRODUCT_SERVICE_URL=product:50051
+      - JWT_SECRET_KEY=SOME_SECRET_KEY
+    ports:
+      - "8080:8080"
+    networks:
+      - grpc
+
+volumes:
+  product_data: {}
+  order_data: {}
+
+networks:
+  product-network:
+    driver: bridge
+  order-network:
+    driver: bridge
+  grpc:
+    driver: bridge

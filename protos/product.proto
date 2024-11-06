@@ -1,0 +1,83 @@
+syntax = "proto3";
+
+package product;
+
+// Define the Product message
+message Product {
+  int32 id = 1;
+  string name = 2;
+  string description = 3;
+  int32 availableQuantity = 4;
+  float price = 5;
+}
+
+// Request and response messages for the Get operation
+message GetRequest {
+  int32 id = 1;
+}
+
+message GetResponse {
+  Product product = 1;
+}
+
+// Request and response messages for the Create operation
+message CreateRequest {
+  string name = 1;
+  string description = 2;
+  int32 availableQuantity = 3;
+  float price = 4;
+}
+
+message CreateResponse {
+  Product product = 1;
+}
+
+// Request and response messages for the Update operation
+message UpdateRequest {
+  Product product = 1;
+}
+
+message UpdateResponse {
+  Product product = 1;
+}
+
+// Request and response messages for the Delete operation
+message DeleteRequest {
+  int32 id = 1;
+}
+
+message DeleteResponse {
+  bool success = 1;
+}
+
+message DeductQuantity {
+  int32 id = 1;
+  int32 requestedQuantity = 2;
+}
+
+message DeductQuantityRequest {
+  repeated DeductQuantity deductQuantities = 1;
+}
+
+message DeductQuantityResponse {
+  bool success = 1;
+}
+
+// Define the ProductService with CRUD operations
+service ProductService {
+  // Create a new product
+  rpc Create (CreateRequest) returns (CreateResponse) {}
+
+  // Get a product by ID
+  rpc Get (GetRequest) returns (GetResponse) {}
+
+  // Update a product by ID
+  rpc Update (UpdateRequest) returns (UpdateResponse) {}
+
+  // Delete a product by ID
+  rpc Delete (DeleteRequest) returns (DeleteResponse) {}
+
+  // Checks if the requested product quantites are available
+  // and deducts thems
+  rpc DeductProductQuantity(DeductQuantityRequest) returns (DeductQuantityResponse) {}
+}

@@ -1,0 +1,63 @@
+POST http://localhost:8080/login
+Content-Type: application/json
+
+{
+    "username": "admin",
+    "password": "password"
+}
+
+###
+
+POST http://localhost:8080/orders/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzA4NjExODgsInVzZXJOYW1lIjoiYWRtaW4ifQ.QVbft7lJbFH5VmKiLyJjNJ9ddVDS-e3e64mxfo0qL-w
+
+{
+    "products": [{
+        "id": 11,
+        "requestedQuantity": 180
+    },
+    {
+        "id": 1,
+        "requestedQuantity": 180
+    }]
+}
+
+###
+GET http://localhost:8080/orders/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzA4NjExODgsInVzZXJOYW1lIjoiYWRtaW4ifQ.QVbft7lJbFH5VmKiLyJjNJ9ddVDS-e3e64mxfo0qL-w
+###
+
+POST http://localhost:8080/products/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzA4NjExODgsInVzZXJOYW1lIjoiYWRtaW4ifQ.QVbft7lJbFH5VmKiLyJjNJ9ddVDS-e3e64mxfo0qL-w
+
+{
+    "name": "name 1",
+    "description": "this is a description 1",
+    "price": 100,
+    "availableQuantity": 200
+}
+
+###
+
+GET http://localhost:8080/products/11
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzA4NjExODgsInVzZXJOYW1lIjoiYWRtaW4ifQ.QVbft7lJbFH5VmKiLyJjNJ9ddVDS-e3e64mxfo0qL-w
+
+###
+
+PATCH http://localhost:8080/products/11
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzA4NjExODgsInVzZXJOYW1lIjoiYWRtaW4ifQ.QVbft7lJbFH5VmKiLyJjNJ9ddVDS-e3e64mxfo0qL-w
+
+{
+    "name": "name 10"
+}
+
+###
+
+DELETE http://localhost:8080/products/8
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzA4NjExODgsInVzZXJOYW1lIjoiYWRtaW4ifQ.QVbft7lJbFH5VmKiLyJjNJ9ddVDS-e3e64mxfo0qL-w
