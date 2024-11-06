@@ -60,6 +60,8 @@ export class ProductService {
   async deductProductQuantity(
     deductQuantities: DeductQuantity[],
   ): Promise<boolean> {
+    // TODO: do this in a transaction so that if one product fails, the
+    // other ones are not updated
     for (let i = 0; i < deductQuantities.length; i++) {
       const { id, requestedQuantity } = deductQuantities.at(i);
       const productEntity = await this.productsRepository.findOneBy({ id });
