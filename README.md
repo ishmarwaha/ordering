@@ -7,7 +7,7 @@ Ordering application with using grpc micro-services
 2. **ordering-service**: nestJS gRPC microservice to manage Order creation and completion
 3. **api-gateway**: Golang service using gorilla mux to act as a gateway for `product-service` and `ordering-service`
 
-These services are able to communicate to each through RPC calls using the protobuf definitions defined in `protos` folder.
+These services are able to communicate with each other through RPC calls using the protobuf definitions defined in `protos` folder.
 
 The gateway implements a layer of JWT authentication and requires the client to pass in an authorization token in header while trying to access any of the exposed endpoints.
 
